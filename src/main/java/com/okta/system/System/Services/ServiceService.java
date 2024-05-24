@@ -45,7 +45,6 @@ public class ServiceService {
     }
 
     public void delete(String id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
+        repository.deleteById(id);
     }
 }
