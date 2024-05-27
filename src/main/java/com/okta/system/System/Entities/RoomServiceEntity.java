@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Document(collection = "roomService")
-public class RoomService {
+public class RoomServiceEntity {
 
     @Id
     private String id;
@@ -19,10 +19,10 @@ public class RoomService {
     @DBRef
     private Service service;
 
-    public RoomService() {
+    public RoomServiceEntity() {
     }
 
-    public RoomService(Room room, Service service) {
+    public RoomServiceEntity(Room room, Service service) {
         this.room = room;
         this.service = service;
     }

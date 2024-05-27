@@ -4,25 +4,31 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import com.okta.system.System.Dtos.CreateRoomDto;
+import com.okta.system.System.Dtos.CreateRoomServiceDto;
 import com.okta.system.System.Dtos.UpdateRoomDto;
 import com.okta.system.System.Entities.Room;
+import com.okta.system.System.Entities.RoomServiceEntity;
+import com.okta.system.System.Entities.Service;
 import com.okta.system.System.Repositories.RoomRepository;
+import com.okta.system.System.Repositories.RoomServiceRepository;
 
-@Service
+@org.springframework.stereotype.Service
 public class RoomService {
 
     @Autowired
     private RoomRepository repository;
+    @Autowired
+    private RoomServiceRepository roomServiceRepository;
+    @Autowired
+    private ServiceService serviceService;
 
     public List<Room> getAll() {
         return repository.findAll();
     }
 
     public List<Room> getAllRoomsBy(String attr, String value) {
-        System.out.println("attr: " + attr + " value: " + value);
         if (attr.equals("status")) {
             return repository.findByStatus(value);
         }
@@ -33,7 +39,6 @@ public class RoomService {
             return repository.findByPrice(value);
         }
         if (attr.equals("nroBeds")) {
-            System.out.println("nroBeds:" + value);
             return repository.findByNroBeds(Integer.parseInt(value));
         }
         if (attr.equals("nroPersons")) {
@@ -61,7 +66,17 @@ public class RoomService {
         return repository.save(service);
     }
 
-    public void delete(String id) {
-        repository.deleteById(id);
+    public RoomServiceEntity addServices(CreateRoomServiceDto createRoomServiceDto) {
+        Room room = getOne(createRoomServiceDto.getRoom());
+        Service service = serviceService.getOne(createRoomServiceDto.getService());
+        RoomServiceEntity roomServiceEntity = new RoomServiceEntity(room, service);
+        return roomServiceRepository.save(roomServiceEntity);
     }
+
+    public List<RoomServiceEntity> getServicesByRoom(String id) {
+        Room roomEntity = getOne(id);
+        return roomServiceRepository.findByRoom(roomEntity.getId());
+
+    }
+
 }

@@ -7,6 +7,5 @@ public enum StatusRoom {
     EN_LIMPIEZA("En limpieza"),;
 
     StatusRoom(String string) {
-        // TODO Auto-generated constructor stub
     }
 }
