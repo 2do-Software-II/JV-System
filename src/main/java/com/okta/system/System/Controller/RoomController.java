@@ -35,7 +35,6 @@ public class RoomController {
 
     @GetMapping("/api/room/services/{id}")
     public List<RoomServiceEntity> getServicesByRoom(@PathVariable String id) {
-        System.out.println("SERVICES: " + id);
         return roomService.getServicesByRoom(id);
     }
 
