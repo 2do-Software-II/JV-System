@@ -66,6 +66,12 @@ public class RoomService {
         return repository.save(service);
     }
 
+    public Room updateStatus(String id, String status) {
+        Room room = getOne(id);
+        room.setStatus(status);
+        return repository.save(room);
+    }
+
     public RoomServiceEntity addServices(CreateRoomServiceDto createRoomServiceDto) {
         Room room = getOne(createRoomServiceDto.getRoom());
         Service service = serviceService.getOne(createRoomServiceDto.getService());
