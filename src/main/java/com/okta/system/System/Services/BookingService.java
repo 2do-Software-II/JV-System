@@ -57,18 +57,21 @@ public class BookingService {
         booking.setCustomer(customer);
         if (createBookingDto.getPrePaid() != 0) {
             booking.setPrePaid(createBookingDto.getPrePaid());
+            booking.setStatus("PENDIENTE");
         }
         if (createBookingDto.getFullPayment() != 0) {
             booking.setFullPayment(createBookingDto.getFullPayment());
+            booking.setStatus("RESERVADO");
         }
         if (createBookingDto.getCheckIn() != null) {
             booking.setCheckIn(createBookingDto.getCheckIn());
+            booking.setStatus("CHECKED_IN");
         }
         if (createBookingDto.getCheckOut() != null) {
             booking.setCheckOut(createBookingDto.getCheckOut());
+            booking.setStatus("FINALIZADO");
         }
         Booking bookingSaved = repository.save(booking);
-        roomService.updateStatus(room.getId(), "Reservado");
         return bookingSaved;
     }
 
@@ -82,15 +85,17 @@ public class BookingService {
 
     public Booking update(String id, UpdateBookingDto updateBookingDto) {
         Booking booking = getOne(id);
-        booking.update(updateBookingDto);
         if (updateBookingDto.getCheckIn() != null) {
             Room room = booking.getRoom();
             roomService.updateStatus(room.getId(), "Ocupado");
+            updateBookingDto.setStatus("CHECKED_IN");
         }
         if (updateBookingDto.getCheckOut() != null) {
             Room room = booking.getRoom();
             roomService.updateStatus(room.getId(), "Limpieza");
+            updateBookingDto.setStatus("FINALIZADO");
         }
+        booking.update(updateBookingDto);
         return repository.save(booking);
     }
 
