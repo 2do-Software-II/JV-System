@@ -54,6 +54,8 @@ public class BookingService {
         booking.setEndDate(createBookingDto.getEndDate());
         booking.setRoom(room);
         booking.setCustomer(customer);
+        booking.setCheckIn(createBookingDto.getCheckIn());
+        booking.setCheckOut(createBookingDto.getCheckOut());
         if (createBookingDto.getPrePaid() != 0) {
             booking.setPrePaid(createBookingDto.getPrePaid());
             booking.setStatus("PENDIENTE");
@@ -63,11 +65,9 @@ public class BookingService {
             booking.setStatus("RESERVADO");
         }
         if (createBookingDto.getCheckIn() != "") {
-            booking.setCheckIn(createBookingDto.getCheckIn());
             booking.setStatus("CHECKED_IN");
         }
         if (createBookingDto.getCheckOut() != "") {
-            booking.setCheckOut(createBookingDto.getCheckOut());
             booking.setStatus("FINALIZADO");
         }
         Booking bookingSaved = repository.save(booking);
