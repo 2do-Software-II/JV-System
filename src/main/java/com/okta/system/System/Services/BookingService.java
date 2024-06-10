@@ -62,11 +62,11 @@ public class BookingService {
             booking.setFullPayment(createBookingDto.getFullPayment());
             booking.setStatus("RESERVADO");
         }
-        if (createBookingDto.getCheckIn() != null) {
+        if (createBookingDto.getCheckIn() != "") {
             booking.setCheckIn(createBookingDto.getCheckIn());
             booking.setStatus("CHECKED_IN");
         }
-        if (createBookingDto.getCheckOut() != null) {
+        if (createBookingDto.getCheckOut() != "") {
             booking.setCheckOut(createBookingDto.getCheckOut());
             booking.setStatus("FINALIZADO");
         }
