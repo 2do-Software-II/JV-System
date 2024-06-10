@@ -62,20 +62,11 @@ public class BookingService {
             booking.setFullPayment(createBookingDto.getFullPayment());
             booking.setStatus("RESERVADO");
         }
-        if (createBookingDto.getCheckIn() != "NaN/NaN/NaN"
-                || createBookingDto.getCheckIn() != null
-                || createBookingDto.getCheckIn() != ""
-                || createBookingDto.getCheckIn() != " "
-                || createBookingDto.getCheckIn() != "  ") {
+        if (createBookingDto.getCheckIn() != "") {
             booking.setCheckIn(createBookingDto.getCheckIn());
             booking.setStatus("CHECKED_IN");
         }
-        if (createBookingDto.getCheckOut() != "NaN/NaN/NaN"
-                || createBookingDto.getCheckOut() != null
-                || createBookingDto.getCheckOut() != ""
-                || createBookingDto.getCheckOut() != " "
-                || createBookingDto.getCheckOut() != "  ") {
-            System.out.printf("entro", createBookingDto.getCheckIn());
+        if (createBookingDto.getCheckOut() != "") {
             booking.setCheckOut(createBookingDto.getCheckOut());
             booking.setStatus("FINALIZADO");
         }
@@ -94,20 +85,12 @@ public class BookingService {
 
     public Booking update(String id, UpdateBookingDto updateBookingDto) {
         Booking booking = getOne(id);
-        if (updateBookingDto.getCheckIn() != "NaN/NaN/NaN"
-                || updateBookingDto.getCheckIn() != null
-                || updateBookingDto.getCheckIn() != ""
-                || updateBookingDto.getCheckIn() != " "
-                || updateBookingDto.getCheckIn() != "  ") {
+        if (updateBookingDto.getCheckIn() != "") {
             Room room = booking.getRoom();
             roomService.updateStatus(room.getId(), "Ocupado");
             updateBookingDto.setStatus("CHECKED_IN");
         }
-        if (updateBookingDto.getCheckOut() != "NaN/NaN/NaN"
-                || updateBookingDto.getCheckOut() != null
-                || updateBookingDto.getCheckOut() != ""
-                || updateBookingDto.getCheckOut() != " "
-                || updateBookingDto.getCheckOut() != "  ") {
+        if (updateBookingDto.getCheckOut() != "") {
             Room room = booking.getRoom();
             roomService.updateStatus(room.getId(), "Limpieza");
             updateBookingDto.setStatus("FINALIZADO");
