@@ -75,6 +75,7 @@ public class BookingService {
                 || createBookingDto.getCheckOut() != ""
                 || createBookingDto.getCheckOut() != " "
                 || createBookingDto.getCheckOut() != "  ") {
+            System.out.printf("entro", createBookingDto.getCheckIn());
             booking.setCheckOut(createBookingDto.getCheckOut());
             booking.setStatus("FINALIZADO");
         }
