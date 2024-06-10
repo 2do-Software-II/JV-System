@@ -49,7 +49,6 @@ public class BookingService {
         Booking booking = new Booking();
         booking.setDate(createBookingDto.getDate());
         booking.setTime(createBookingDto.getTime());
-        booking.setStatus(createBookingDto.getStatus());
         booking.setPaymentMethod(createBookingDto.getPaymentMethod());
         booking.setStartDate(createBookingDto.getStartDate());
         booking.setEndDate(createBookingDto.getEndDate());
@@ -72,6 +71,7 @@ public class BookingService {
             booking.setStatus("FINALIZADO");
         }
         Booking bookingSaved = repository.save(booking);
+        roomService.updateStatus(room.getId(), "Ocupado");
         return bookingSaved;
     }
 
