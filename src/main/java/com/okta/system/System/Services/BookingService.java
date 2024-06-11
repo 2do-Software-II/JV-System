@@ -85,13 +85,17 @@ public class BookingService {
 
     public Booking update(String id, UpdateBookingDto updateBookingDto) {
         Booking booking = getOne(id);
+        Room room = booking.getRoom();
+        if (booking.getStatus() == "CANCELADO" || updateBookingDto.getStatus() == "CANCELADO") {
+            roomService.updateStatus(room.getId(), "Disponible");
+            booking.update(updateBookingDto);
+            return repository.save(booking);
+        }
         if (updateBookingDto.getCheckIn() != "") {
-            Room room = booking.getRoom();
             roomService.updateStatus(room.getId(), "Ocupado");
             updateBookingDto.setStatus("CHECKED_IN");
         }
         if (updateBookingDto.getCheckOut() != "") {
-            Room room = booking.getRoom();
             roomService.updateStatus(room.getId(), "Limpieza");
             updateBookingDto.setStatus("FINALIZADO");
         }
