@@ -32,6 +32,11 @@ public class CustomerController {
         return customerService.create(createCustomerDto);
     }
 
+    @GetMapping("/api/customer/by/user/{id}")
+    public Customer getCustomerByUser(@PathVariable String id) {
+        return customerService.getCustomerByUser(id);
+    }
+
     @GetMapping("/api/customer/{id}")
     public Customer getOne(@PathVariable String id) {
         return customerService.getOne(id);

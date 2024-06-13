@@ -63,4 +63,18 @@ public class CustomerService {
     public void delete(String id) {
         repository.deleteById(id);
     }
+
+    public Customer getCustomerByUser(String id) {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isEmpty()) {
+            throw new RuntimeException("user not found");
+        }
+        List<Customer> customers = repository.findAll();
+        for (Customer customer : customers) {
+            if (customer.getUser().getId().equals(id)) {
+                return customer;
+            }
+        }
+        throw new RuntimeException("Customer not found");
+    }
 }
